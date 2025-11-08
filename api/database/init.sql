@@ -6,9 +6,7 @@ CREATE TABLE IF NOT EXISTS vehicles
     model      VARCHAR(255)                      NOT NULL,
     version    VARCHAR(255)                      NOT NULL,
     price      BIGINT UNSIGNED                   NOT NULL,
-    sale_point VARCHAR(255)                      NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    sale_point VARCHAR(255)                      NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS schedules
@@ -16,9 +14,6 @@ CREATE TABLE IF NOT EXISTS schedules
     id           BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     vehicle_id   BIGINT                            NOT NULL,
     scheduled_at TIMESTAMP                         NOT NULL,
-    created_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-
     CONSTRAINT fk_schedule_vehicle_id FOREIGN KEY (vehicle_id) REFERENCES vehicles (id)
 );
 
@@ -29,8 +24,6 @@ CREATE TABLE IF NOT EXISTS visits
     name        VARCHAR(255)                      NOT NULL,
     email       VARCHAR(255)                      NOT NULL,
     phone       VARCHAR(255)                      NOT NULL,
-    created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
     CONSTRAINT fk_visit_schedule_id FOREIGN KEY (schedule_id) REFERENCES schedules (id),
     CONSTRAINT uq_visit_schedule_id UNIQUE (schedule_id)
