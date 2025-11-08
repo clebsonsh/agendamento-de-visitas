@@ -19,14 +19,17 @@ class VehicleRepository implements IVehicleRepository
     public function getAll(): array
     {
         return $this->db->query(<<<'SQL'
-            SELECT * FROM vehicles
+            SELECT *
+            FROM vehicles
         SQL)->fetchAll();
     }
 
     public function getById(int $id): array
     {
         $stmt = $this->db->prepare(<<<'SQL'
-            SELECT * FROM vehicles WHERE id = :id LIMIT 1
+            SELECT *
+            FROM vehicles
+            WHERE id = :id LIMIT 1
         SQL);
 
         $stmt->execute(['id' => $id]);

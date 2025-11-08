@@ -18,6 +18,7 @@ class VehicleService
         $vehicles = [];
 
         foreach ($data as $vehicle) {
+
             $vehicles[] = new VehicleEntity(
                 id: $vehicle['id'],
                 image: $vehicle['image'],
