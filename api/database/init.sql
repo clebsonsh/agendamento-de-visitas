@@ -33,9 +33,9 @@ CREATE TABLE IF NOT EXISTS visits
 INSERT INTO vehicles
 (id, image, make, model, version, price, sale_point)
 VALUES
-(1, 'https://raw.githubusercontent.com/clebsonsh/agendamento-de-visitas/refs/heads/main/assets/polo.png', 'Volkswagen', 'Polo', 'Track 1.0 MPI', 9399000, 'São Bernardo do Campo - São Paulo'),
-(2, 'https://raw.githubusercontent.com/clebsonsh/agendamento-de-visitas/refs/heads/main/assets/onix.png', 'Chevrolet', 'Onix', '1.0 MT', 8499000, 'Santo André - São Paulo'),
-(3, 'https://raw.githubusercontent.com/clebsonsh/agendamento-de-visitas/refs/heads/main/assets/hb20.png', 'Hyundai', 'HB20', '1.0 MT (Sense Plus)', 9519000, 'São Caetano do Sul - São Paulo');
+(1, 'https://raw.githubusercontent.com/clebsonsh/agendamento-de-visitas/refs/heads/main/assets/polo.png', 'Volkswagen', 'Polo', 'TRACK 1.0 MPI FLEX 4P MANUAL (84 cv)', 9399000, 'São Bernardo do Campo - São Paulo'),
+(2, 'https://raw.githubusercontent.com/clebsonsh/agendamento-de-visitas/refs/heads/main/assets/onix.png', 'Chevrolet', 'Onix', '1.0 ASPIRADO 4P MANUAL (82 cv)', 8499000, 'Santo André - São Paulo'),
+(3, 'https://raw.githubusercontent.com/clebsonsh/agendamento-de-visitas/refs/heads/main/assets/hb20.png', 'Hyundai', 'HB20', '1.0 KAPPA 4P MANUAL (80 cv)', 9519000, 'São Caetano do Sul - São Paulo');
 
 INSERT INTO schedules (vehicle_id, scheduled_at)
 VALUES

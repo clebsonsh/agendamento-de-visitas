@@ -8,6 +8,4 @@ use Pecee\SimpleRouter\SimpleRouter;
 
 require_once __DIR__.'/../routes.php';
 
-SimpleRouter::setDefaultNamespace('\Api\Controllers');
-
 SimpleRouter::start();
