@@ -6,7 +6,6 @@ namespace Api\Services;
 
 use Api\Data\Entities\ScheduleEntity;
 use Api\Repositories\IScheduleRepository;
-use DateTime;
 
 class ScheduleService
 {
@@ -14,21 +13,16 @@ class ScheduleService
 
     public function getByVehicleId(int $vehicleId)
     {
-        $data = $this->scheduleRepository->getByVehicleId($vehicleId);
+        $results = $this->scheduleRepository->getByVehicleId($vehicleId);
 
-        if (empty($data)) {
+        if (empty($results)) {
             return [];
         }
 
         $schedules = [];
 
-        foreach ($data as $schedule) {
-            $schedules[] = new ScheduleEntity(
-                id: $schedule['id'],
-                vehicleId: $schedule['vehicle_id'],
-                scheduledAt: new DateTime($schedule['scheduled_at']),
-                isBooked: (bool) $schedule['is_booked'],
-            );
+        foreach ($results as $schedule) {
+            $schedules[] = ScheduleEntity::createFromArray($schedule);
         }
 
         return $schedules;

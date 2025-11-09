@@ -13,21 +13,12 @@ class VehicleService
 
     public function getAll(): array
     {
-        $data = $this->vehicleRepository->getAll();
+        $results = $this->vehicleRepository->getAll();
 
         $vehicles = [];
 
-        foreach ($data as $vehicle) {
-
-            $vehicles[] = new VehicleEntity(
-                id: $vehicle['id'],
-                image: $vehicle['image'],
-                make: $vehicle['make'],
-                model: $vehicle['model'],
-                version: $vehicle['version'],
-                price: (int) $vehicle['price'],
-                salePoint: $vehicle['sale_point'],
-            );
+        foreach ($results as $vehicle) {
+            $vehicles[] = VehicleEntity::createFromArray($vehicle);
         }
 
         return $vehicles;
@@ -35,20 +26,12 @@ class VehicleService
 
     public function getById(int $id)
     {
-        $vehicle = $this->vehicleRepository->getById($id);
+        $result = $this->vehicleRepository->getById($id);
 
-        if (empty($vehicle)) {
+        if (empty($result)) {
             return [];
         }
 
-        return new VehicleEntity(
-            id: $vehicle['id'],
-            image: $vehicle['image'],
-            make: $vehicle['make'],
-            model: $vehicle['model'],
-            version: $vehicle['version'],
-            price: (int) $vehicle['price'],
-            salePoint: $vehicle['sale_point'],
-        );
+        return VehicleEntity::createFromArray($result);
     }
 }
