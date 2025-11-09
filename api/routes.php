@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Api\Controllers\VehicleController;
+use Api\Controllers\VisitController;
 use Pecee\Http\Request;
 use Pecee\SimpleRouter\SimpleRouter as Router;
 
@@ -12,12 +13,13 @@ header('Access-Control-Allow-Origin: *');
 Router::group(['prefix' => '/api/v1/'], function () {
     Router::get('/vehicles', [VehicleController::class, 'index'])->name('vehicles.index');
     Router::get('/vehicles/{id}', [VehicleController::class, 'show'])->name('vehicles.show');
+
+    Router::post('/schedules/{schedule_id}/visits', [VisitController::class, 'create'])->name('visits.create');
 });
 
 Router::error(function (Request $request, \Exception $exception) {
     switch ($exception->getCode()) {
         case 404:
-            $path = $request->getUrl()->getPath();
             response()->httpCode(404)->json([
                 'message' => 'The route not found.',
             ]);
