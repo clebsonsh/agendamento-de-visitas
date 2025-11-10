@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Api\Services;
 
-use Api\Data\Entities\VehicleEntity;
+use Api\Data\DTOs\VehicleResponseDto;
 use Api\Repositories\IVehicleRepository;
 
 class VehicleService
@@ -18,7 +18,7 @@ class VehicleService
         $vehicles = [];
 
         foreach ($results as $vehicle) {
-            $vehicles[] = VehicleEntity::createFromArray($vehicle);
+            $vehicles[] = VehicleResponseDto::createFromArray($vehicle);
         }
 
         return $vehicles;
@@ -32,6 +32,6 @@ class VehicleService
             return [];
         }
 
-        return VehicleEntity::createFromArray($result);
+        return VehicleResponseDto::createFromArray($result);
     }
 }

@@ -2,16 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Api\Data\Entities;
+namespace Api\Data\DTOs;
 
-use DateTime;
-
-class ScheduleEntity
+class ScheduleResponseDto
 {
     public function __construct(
         public readonly int $id,
         public readonly int $vehicleId,
-        public readonly DateTime $scheduledAt,
+        public readonly string $scheduledAt,
         public readonly bool $isBooked,
     ) {}
 
@@ -20,7 +18,7 @@ class ScheduleEntity
         return new self(
             id: $schedule['id'],
             vehicleId: $schedule['vehicle_id'],
-            scheduledAt: new DateTime($schedule['scheduled_at']),
+            scheduledAt: $schedule['scheduled_at'],
             isBooked: (bool) $schedule['is_booked'],
         );
     }

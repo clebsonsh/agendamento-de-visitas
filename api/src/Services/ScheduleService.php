@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Api\Services;
 
-use Api\Data\Entities\ScheduleEntity;
+use Api\Data\DTOs\ScheduleResponseDto;
 use Api\Repositories\IScheduleRepository;
+use DateTime;
 
 class ScheduleService
 {
@@ -21,8 +22,10 @@ class ScheduleService
 
         $schedules = [];
 
-        foreach ($results as $schedule) {
-            $schedules[] = ScheduleEntity::createFromArray($schedule);
+        foreach ($results as $data) {
+            $shchedule = ScheduleResponseDto::createFromArray($data);
+            $day = (new DateTime($shchedule->scheduledAt))->format('Y-m-d');
+            $schedules[$day][] = $shchedule;
         }
 
         return $schedules;

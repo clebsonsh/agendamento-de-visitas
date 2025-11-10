@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Api\Data\Entities;
+namespace Api\Data\DTOs;
 
-class VehicleEntity
+class VehicleResponseDto
 {
     public function __construct(
         public readonly int $id,
@@ -12,7 +12,7 @@ class VehicleEntity
         public readonly string $make,
         public readonly string $model,
         public readonly string $version,
-        public readonly int $price,
+        public readonly float $price,
         public readonly string $salePoint,
     ) {}
 
@@ -24,7 +24,7 @@ class VehicleEntity
             make: $vehicle['make'],
             model: $vehicle['model'],
             version: $vehicle['version'],
-            price: (int) $vehicle['price'],
+            price: $vehicle['price'] / 100,
             salePoint: $vehicle['sale_point'],
         );
     }
