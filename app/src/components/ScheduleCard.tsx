@@ -2,28 +2,29 @@ import { Box, Button, Card, Typography } from "@mui/material";
 import type { Schedules } from "../types/entities";
 import ScheduleDayButton from "./ScheduleDayButton";
 import ScheduleHourButton from "./ScheduleHourButton";
+import { useState } from "react";
 
 function ScheduleCard(schedules: Schedules) {
-  const days: Array<Date> = Object.keys(schedules).map((day) => new Date(day));
+  const firstDayInSchedules: string = Object.keys(schedules)[0];
 
-  const activeDay = days[2];
+  const [selectedDay, setSelectedDay] = useState("");
+  const [selectedScheduleId, setSelectedScheduleId] = useState(0);
 
-  const activeSchedules = schedules[activeDay.toISOString().split("T")[0]];
+  const handleSelectDayClick = (day: string) => {
+    setSelectedDay(day);
+    setSelectedScheduleId(0);
+  };
+  const handleSelectScheduleClick = (id: number) => setSelectedScheduleId(id);
 
-  const monthAndYear: Date = days[0];
-  const month: string = monthAndYear
+  const activeSchedules = schedules[selectedDay || firstDayInSchedules];
+
+  const month: string = new Date(firstDayInSchedules)
     .toLocaleDateString("pt-BR", {
       month: "long",
     })
     .toUpperCase();
 
-  const year: number = monthAndYear.getFullYear();
-
-  const getHourAndMinutes = (date: string) => {
-    const hour = new Date(date).getHours();
-
-    return `${hour}:00`;
-  };
+  const year: string = firstDayInSchedules.slice(0, 4);
 
   return (
     <Card
@@ -66,11 +67,12 @@ function ScheduleCard(schedules: Schedules) {
               gap: 4,
             }}
           >
-            {days.map((day) => (
+            {Object.keys(schedules).map((day) => (
               <ScheduleDayButton
-                key={day.toDateString()}
-                date={day}
-                active={activeDay == day}
+                key={day}
+                day={day}
+                active={selectedDay == day}
+                handleClick={handleSelectDayClick}
               />
             ))}
           </Box>
@@ -86,8 +88,10 @@ function ScheduleCard(schedules: Schedules) {
             {activeSchedules.map((schedule) => (
               <ScheduleHourButton
                 key={schedule.id}
-                active={false}
-                hour={getHourAndMinutes(schedule.scheduledAt)}
+                schedule={schedule}
+                disabled={!selectedDay}
+                active={selectedScheduleId === schedule.id}
+                handleClick={handleSelectScheduleClick}
               />
             ))}
           </Box>
@@ -100,7 +104,11 @@ function ScheduleCard(schedules: Schedules) {
               gap: 4,
             }}
           >
-            <Button variant="contained" size="large">
+            <Button
+              disabled={!selectedScheduleId}
+              variant="contained"
+              size="large"
+            >
               Agendar Visita
             </Button>
           </Box>
