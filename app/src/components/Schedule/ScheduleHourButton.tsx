@@ -1,9 +1,9 @@
-import type { Schedule } from "../types/entities";
+import type { Schedule } from "../../types/entities";
 
 interface ScheduleHourButtonProps {
   schedule: Schedule;
   disabled: boolean;
-  active: boolean;
+  selected: boolean;
   handleClick: (id: number) => void;
 }
 
@@ -35,7 +35,7 @@ const scheduleHourButtonStyles = {
 function ScheduleHourButton({
   schedule,
   disabled,
-  active,
+  selected,
   handleClick,
 }: ScheduleHourButtonProps) {
   const getHourAndMinutes = (scheduledAt: string) => {
@@ -44,7 +44,7 @@ function ScheduleHourButton({
     return `${hour}:00`;
   };
 
-  const activeStyle = disabled ? "disabled" : active ? "active" : "default";
+  const activeStyle = disabled ? "disabled" : selected ? "active" : "default";
 
   const style = scheduleHourButtonStyles[activeStyle];
 

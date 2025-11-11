@@ -1,11 +1,13 @@
-import { Box } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
+
+import { Box } from "@mui/material";
 
 import VehicleCard from "../components/VehicleCard";
 
 import type { Schedules, Vehicle } from "../types/entities";
-import ScheduleCard from "../components/ScheduleCard";
+import ScheduleCard from "../components/Schedule/ScheduleCard";
+import ScheduleSelect from "../components/Schedule/ScheduleSelect";
 
 function Schedule() {
   const vehicleId = useParams().vehicleId;
@@ -13,7 +15,7 @@ function Schedule() {
   const url = import.meta.env.VITE_BACKEND_URL + "api/v1/vehicles/" + vehicleId;
 
   const { data, isFetching } = useQuery({
-    queryKey: ["vehicle"],
+    queryKey: ["vehicles", vehicleId],
     queryFn: () => fetch(url).then((res) => res.json()),
   });
 
@@ -32,7 +34,11 @@ function Schedule() {
         {!isFetching && <VehicleCard key={vehicle.id} {...vehicle} />}
       </Box>
       <Box sx={{ flexGrow: 1 }}>
-        {!isFetching && <ScheduleCard {...schedules} />}
+        {!isFetching && (
+          <ScheduleCard header="Agende o dia e horario da sua visita">
+            <ScheduleSelect {...schedules} />
+          </ScheduleCard>
+        )}
       </Box>
     </Box>
   );

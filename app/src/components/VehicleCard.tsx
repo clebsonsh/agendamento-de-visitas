@@ -14,8 +14,7 @@ function VehicleCard(vehicle: Vehicle) {
     <Card
       sx={{
         borderRadius: 4,
-        height: 520,
-        width: "100%",
+        minHeight: 540,
         display: "flex",
         flexDirection: "column",
       }}

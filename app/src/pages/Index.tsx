@@ -17,7 +17,11 @@ function Index() {
   return (
     <Box sx={{ display: "flex", justifyContent: "space-between", gap: 4 }}>
       {query.data?.vehicles?.map((vehicle: Vehicle) => (
-        <Link to={`/${vehicle.id}`} style={{ textDecoration: "none" }}>
+        <Link
+          key={vehicle.id}
+          to={`/${vehicle.id}`}
+          style={{ textDecoration: "none" }}
+        >
           <VehicleCard key={vehicle.id} {...vehicle} />
         </Link>
       ))}

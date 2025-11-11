@@ -1,11 +1,11 @@
 interface ScheduleDayButtonProps {
   day: string;
-  active: boolean;
+  selected: boolean;
   handleClick: (day: string) => void;
 }
 function ScheduleDayButton({
   day,
-  active,
+  selected,
   handleClick,
 }: ScheduleDayButtonProps) {
   const date = new Date(day + " 00:00:00");
@@ -22,10 +22,10 @@ function ScheduleDayButton({
   return (
     <button
       style={{
-        backgroundColor: active ? "#4c9300" : "#f0f0f0",
+        backgroundColor: selected ? "#4c9300" : "#f0f0f0",
         borderColor: "transparent",
-        color: active ? "#f0f6fc" : "inherit",
-        cursor: active ? "inherit" : "pointer",
+        color: selected ? "#f0f6fc" : "inherit",
+        cursor: selected ? "inherit" : "pointer",
         padding: "20px 24px",
         borderRadius: "50%",
         display: "flex",
