@@ -10,7 +10,6 @@ class ScheduleResponseDto
         public readonly int $id,
         public readonly int $vehicleId,
         public readonly string $scheduledAt,
-        public readonly bool $isBooked,
     ) {}
 
     public static function createFromArray(array $schedule)
@@ -19,7 +18,6 @@ class ScheduleResponseDto
             id: $schedule['id'],
             vehicleId: $schedule['vehicle_id'],
             scheduledAt: $schedule['scheduled_at'],
-            isBooked: (bool) $schedule['is_booked'],
         );
     }
 }

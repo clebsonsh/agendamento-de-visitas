@@ -20,10 +20,14 @@ class ScheduleRepository implements IScheduleRepository
     {
         $stmt = $this->db->prepare(<<<'SQL'
             SELECT
-                *,
-                EXISTS(SELECT 1 FROM visits WHERE schedule_id = schedules.id) AS is_booked
+                *
             FROM schedules
             WHERE vehicle_id = :vehicle_id
+             AND NOT EXISTS (
+                SELECT 1
+                FROM visits
+                WHERE schedule_id = schedules.id
+             )
         SQL);
 
         $stmt->execute(['vehicle_id' => $vehicleId]);

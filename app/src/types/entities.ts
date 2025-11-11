@@ -12,7 +12,6 @@ interface Schedule {
   id: number;
   vechileId: number;
   scheduledAt: string;
-  isBooked: boolean;
 }
 
 interface Schedules {
