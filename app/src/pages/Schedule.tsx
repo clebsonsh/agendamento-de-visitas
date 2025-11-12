@@ -1,22 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
-
 import { Box } from "@mui/material";
 
 import VehicleCard from "../components/VehicleCard";
 
-import type { Schedules, Vehicle } from "../types/entities";
+import type { Schedules, Vehicle } from "../types/interfaces";
 import ScheduleCard from "../components/Schedule/ScheduleCard";
 import ScheduleSelect from "../components/Schedule/ScheduleSelect";
+import { fetchVehicleById } from "../services/apiService";
 
 function Schedule() {
-  const vehicleId = useParams().vehicleId;
-
-  const url = import.meta.env.VITE_BACKEND_URL + "api/v1/vehicles/" + vehicleId;
+  const vehicleId: string = useParams().vehicleId!;
 
   const { data, isFetching } = useQuery({
     queryKey: ["vehicles", vehicleId],
-    queryFn: () => fetch(url).then((res) => res.json()),
+    queryFn: () => fetchVehicleById(vehicleId),
   });
 
   const vehicle: Vehicle = data?.vehicle;

@@ -7,8 +7,11 @@ import { BrowserRouter, Routes, Route } from "react-router";
 import Layout from "./components/Layout.tsx";
 import Index from "./pages/Index.tsx";
 import Schedule from "./pages/Schedule.tsx";
+import ScheduleVisit from "./pages/ScheduleVisit.tsx";
+import ScheduleDone from "./pages/ScheduleDone.tsx";
 
 const queryClient = new QueryClient();
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <CssBaseline />
@@ -18,6 +21,14 @@ createRoot(document.getElementById("root")!).render(
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path=":vehicleId" element={<Schedule />} />
+            <Route
+              path=":vehicleId/schedule/:scheduleId"
+              element={<ScheduleVisit />}
+            />
+            <Route
+              path=":vehicleId/schedule/:scheduleId/done"
+              element={<ScheduleDone />}
+            />
           </Routes>
         </Layout>
       </BrowserRouter>

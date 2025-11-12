@@ -3,6 +3,7 @@ interface ScheduleDayButtonProps {
   selected: boolean;
   handleClick: (day: string) => void;
 }
+
 function ScheduleDayButton({
   day,
   selected,

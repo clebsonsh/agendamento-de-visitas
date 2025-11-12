@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Api\Controllers;
 
+use Api\Data\DTOs\ErrorResponseDto;
 use Api\Repositories\ScheduleRepository;
 use Api\Repositories\VehicleRepository;
 use Api\Services\ScheduleService;
@@ -33,9 +34,7 @@ class VehicleController
         $vehicle = $this->vehicleService->getById((int) $id);
 
         if (empty($vehicle)) {
-            response()->httpCode(404)->json([
-                'message' => 'The vehicle not found.',
-            ]);
+            response()->httpCode(404)->json(new ErrorResponseDto('The vehicle not found.'));
         }
 
         $schedules = $this->scheduleService->getByVehicleId($vehicle->id);

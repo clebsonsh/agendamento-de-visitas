@@ -30,9 +30,9 @@ class VisitRequestDto
             $visitValidator->assert($data);
         } catch (NestedValidationException $e) {
             $errors = $e->getMessages([
-                'name' => "nome deve conter apenas letras (a-z) e ' '.",
-                'email' => 'email deve conter um endereço de email válido.',
-                'phone' => 'telefone deve ter entre 10 e 11 dígitos, por exemplo, 11987654321.',
+                'name' => 'Deve conter pelo menos 3 letras e apenas letras (a-z) e espaços em branco.',
+                'email' => 'Deve conter um endereço de e-mail válido.',
+                'phone' => 'Deve ter entre 10 e 11 dígitos, por exemplo, 11987654321.',
             ]);
 
             throw new ValidationException($errors);

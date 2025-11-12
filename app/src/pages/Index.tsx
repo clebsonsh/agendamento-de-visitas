@@ -4,14 +4,13 @@ import { Link } from "react-router";
 
 import VehicleCard from "../components/VehicleCard";
 
-import type { Vehicle } from "../types/entities";
+import type { Vehicle } from "../types/interfaces";
+import { fetchVehicles } from "../services/apiService";
 
 function Index() {
-  const url = import.meta.env.VITE_BACKEND_URL + "api/v1/vehicles";
-
   const query = useQuery({
     queryKey: ["vehicles"],
-    queryFn: () => fetch(url).then((res) => res.json()),
+    queryFn: fetchVehicles,
   });
 
   return (

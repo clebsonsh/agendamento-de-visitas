@@ -1,15 +1,10 @@
 import { Box, Card, Divider, Typography } from "@mui/material";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 
-import type { Vehicle } from "./../types/entities";
+import type { Vehicle } from "../types/interfaces";
+import { brlFormatter } from "../helpers";
 
 function VehicleCard(vehicle: Vehicle) {
-  const brlFormatter = (amount: number) =>
-    new Intl.NumberFormat("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    }).format(amount);
-
   return (
     <Card
       sx={{

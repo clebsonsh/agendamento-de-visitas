@@ -1,10 +1,10 @@
-import type { Schedule } from "../../types/entities";
+import type { Schedule } from "../../types/interfaces";
 
 interface ScheduleHourButtonProps {
   schedule: Schedule;
   disabled: boolean;
   selected: boolean;
-  handleClick: (id: number) => void;
+  handleClick: (schedle: Schedule) => void;
 }
 
 const scheduleHourButtonStyles = {
@@ -38,11 +38,7 @@ function ScheduleHourButton({
   selected,
   handleClick,
 }: ScheduleHourButtonProps) {
-  const getHourAndMinutes = (scheduledAt: string) => {
-    const hour = new Date(scheduledAt).getHours();
-
-    return `${hour}:00`;
-  };
+  const hour = new Date(schedule.scheduledAt).getHours() + ":00";
 
   const activeStyle = disabled ? "disabled" : selected ? "active" : "default";
 
@@ -52,9 +48,9 @@ function ScheduleHourButton({
     <button
       disabled={disabled}
       style={style}
-      onClick={() => handleClick(schedule.id)}
+      onClick={() => handleClick(schedule)}
     >
-      {getHourAndMinutes(schedule.scheduledAt)}
+      {hour}
     </button>
   );
 }

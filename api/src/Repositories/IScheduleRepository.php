@@ -7,4 +7,6 @@ namespace Api\Repositories;
 interface IScheduleRepository
 {
     public function getByVehicleId(int $vehicleId);
+
+    public function getById(int $id);
 }

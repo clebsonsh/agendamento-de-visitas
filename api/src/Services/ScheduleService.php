@@ -12,6 +12,17 @@ class ScheduleService
 {
     public function __construct(private IScheduleRepository $scheduleRepository) {}
 
+    public function getById(int $id)
+    {
+        $result = $this->scheduleRepository->getById($id);
+
+        if (empty($result)) {
+            return [];
+        }
+
+        return ScheduleResponseDto::createFromArray($result);
+    }
+
     public function getByVehicleId(int $vehicleId)
     {
         $results = $this->scheduleRepository->getByVehicleId($vehicleId);

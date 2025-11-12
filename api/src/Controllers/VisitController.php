@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Api\Controllers;
 
+use Api\Data\DTOs\ErrorResponseDto;
 use Api\Data\DTOs\VisitRequestDto;
 use Api\Exceptions\ResourceAlreadyExistsException;
 use Api\Exceptions\ValidationException;
@@ -19,27 +20,16 @@ class VisitController
         $this->visitService = new VisitService(new VisitRepository);
     }
 
-    public function create(int $schedule_id)
+    public function create(int $scheduleId)
     {
         try {
-            $visitDto = VisitRequestDto::fromRequest($schedule_id, input()->all());
+            $this->visitService->create(VisitRequestDto::fromRequest($scheduleId, input()->all()));
         } catch (ValidationException $e) {
-            $errors = $e->getErrors();
-
-            response()->httpCode(422)->json([
-                'errors' => $errors,
-            ]);
-        }
-
-        try {
-
-            $this->visitService->create($visitDto);
+            response()->httpCode(422)->json(
+                new ErrorResponseDto($e->getMessage(), $e->getErrors())
+            );
         } catch (ResourceAlreadyExistsException $e) {
-            $errors = ['visit' => $e->getMessage()];
-
-            response()->httpCode(409)->json([
-                'errors' => $errors,
-            ]);
+            response()->httpCode(409)->json(new ErrorResponseDto($e->getMessage()));
         }
 
         response()->httpCode(204);

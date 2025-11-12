@@ -1,36 +1,39 @@
-import type { Schedules } from "../../types/entities";
+import type { Schedule, Schedules } from "../../types/interfaces";
 import { Box, Button, Typography } from "@mui/material";
 import ScheduleDayButton from "./ScheduleDayButton";
 import ScheduleHourButton from "./ScheduleHourButton";
 import { useState } from "react";
+import { Link } from "react-router";
+import { capitalizeFirstLetter } from "../../helpers";
 
 function ScheduleSelect(schedules: Schedules) {
   const firstDayInSchedules: string = Object.keys(schedules)[0];
 
-  const month: string = new Date(firstDayInSchedules)
-    .toLocaleDateString("pt-BR", {
+  const monthAndYear: string = capitalizeFirstLetter(
+    new Date(firstDayInSchedules).toLocaleDateString("pt-BR", {
       month: "long",
-    })
-    .toUpperCase();
+      year: "numeric",
+    }),
+  );
 
-  const year: string = firstDayInSchedules.slice(0, 4);
-
-  const [selectedDay, setSelectedDay] = useState("");
-  const [selectedScheduleId, setSelectedScheduleId] = useState(0);
+  const [selectedDay, setSelectedDay] = useState<string>();
+  const [selectedSchedule, setSelectedSchedule] = useState<Schedule | null>(
+    null,
+  );
 
   const handleSelectDayClick = (day: string) => {
     setSelectedDay(day);
-    setSelectedScheduleId(0);
+    setSelectedSchedule(null);
   };
-  const handleSelectScheduleClick = (id: number) => setSelectedScheduleId(id);
 
-  const activeSchedules = schedules[selectedDay || firstDayInSchedules];
+  const handleSelectScheduleClick = (schedule: Schedule) =>
+    setSelectedSchedule(schedule);
+
+  const schedulesToShow = schedules[selectedDay || firstDayInSchedules];
 
   return (
     <>
-      <Typography variant="h5">
-        {month} {year}
-      </Typography>
+      <Typography variant="h5">{monthAndYear}</Typography>
       <Box
         sx={{
           display: "flex",
@@ -59,18 +62,24 @@ function ScheduleSelect(schedules: Schedules) {
           gap: "16px 24px",
         }}
       >
-        {activeSchedules.map((schedule) => (
+        {schedulesToShow.map((schedule) => (
           <ScheduleHourButton
             key={schedule.id}
             schedule={schedule}
             disabled={!selectedDay}
-            selected={selectedScheduleId === schedule.id}
+            selected={selectedSchedule?.id === schedule.id}
             handleClick={handleSelectScheduleClick}
           />
         ))}
       </Box>
       <Box>
-        <Button disabled={!selectedScheduleId} variant="contained" size="large">
+        <Button
+          disabled={!selectedSchedule}
+          variant="contained"
+          size="large"
+          component={Link}
+          to={`/${selectedSchedule?.vehicleId}/schedule/${selectedSchedule?.id}`}
+        >
           Agendar Visita
         </Button>
       </Box>

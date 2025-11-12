@@ -16,11 +16,35 @@ class ScheduleRepository implements IScheduleRepository
         $this->db = Db::getInstance();
     }
 
+    public function getById(int $id): array
+    {
+        $stmt = $this->db->prepare(<<<'SQL'
+            SELECT
+                *,
+                EXISTS (
+                    SELECT 1
+                        FROM visits
+                        WHERE schedule_id = schedules.id
+                ) as is_booked
+            FROM schedules
+            WHERE id = :id LIMIT 1
+        SQL);
+
+        $stmt->execute(['id' => $id]);
+
+        return $stmt->fetch() ?: [];
+    }
+
     public function getByVehicleId(int $vehicleId): array
     {
         $stmt = $this->db->prepare(<<<'SQL'
             SELECT
-                *
+                *,
+                EXISTS (
+                    SELECT 1
+                        FROM visits
+                        WHERE schedule_id = schedules.id
+                ) as is_booked
             FROM schedules
             WHERE vehicle_id = :vehicle_id
              AND NOT EXISTS (
