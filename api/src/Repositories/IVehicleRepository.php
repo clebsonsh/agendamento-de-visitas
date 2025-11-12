@@ -6,7 +6,7 @@ namespace Api\Repositories;
 
 interface IVehicleRepository
 {
-    public function getAll();
+    public function getAll(): mixed;
 
-    public function getById(int $id);
+    public function getById(int $id): mixed;
 }

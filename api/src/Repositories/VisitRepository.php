@@ -45,6 +45,9 @@ class VisitRepository implements IVisitRepository
 
         $stmt->execute(['schedule_id' => $scheduleId]);
 
-        return (bool) $stmt->fetch()['visit_exists'];
+        /** @var array<string, string> */
+        $result = $stmt->fetch();
+
+        return (bool) $result['visit_exists'];
     }
 }

@@ -18,17 +18,20 @@ class VisitRequestDto
     ) {}
 
     /**
+     * @param  array<string, string>  $request
+     *
      * @throws ValidationException If validation fails
      */
-    public static function fromRequest(int $schedule_id, array $data): self
+    public static function fromRequest(int $schedule_id, array $request): self
     {
         $visitValidator = v::key('name', v::alpha(' ')->stringType()->length(3, 255))
             ->key('email', v::email())
             ->key('phone', v::numericVal()->length(10, 11));
 
         try {
-            $visitValidator->assert($data);
+            $visitValidator->assert($request);
         } catch (NestedValidationException $e) {
+            /** @var array<string, string> */
             $errors = $e->getMessages([
                 'name' => 'Deve conter pelo menos 3 letras e apenas letras (a-z) e espaços em branco.',
                 'email' => 'Deve conter um endereço de e-mail válido.',
@@ -38,6 +41,6 @@ class VisitRequestDto
             throw new ValidationException($errors);
         }
 
-        return new self($schedule_id, $data['name'], $data['email'], $data['phone']);
+        return new self($schedule_id, $request['name'], $request['email'], $request['phone']);
     }
 }

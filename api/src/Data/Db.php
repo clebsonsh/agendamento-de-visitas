@@ -17,11 +17,16 @@ class Db
         $dotenv = Dotenv::createImmutable(dirname(__DIR__, 2));
         $dotenv->load();
 
-        $host = (string) $_ENV['DB_HOST'];
-        $port = (string) $_ENV['DB_PORT'];
-        $database = (string) $_ENV['DB_DATABASE'];
-        $username = (string) $_ENV['DB_USERNAME'];
-        $password = (string) $_ENV['DB_PASSWORD'];
+        /** @var string */
+        $host = $_ENV['DB_HOST'];
+        /** @var string */
+        $port = $_ENV['DB_PORT'];
+        /** @var string */
+        $database = $_ENV['DB_DATABASE'];
+        /** @var string */
+        $username = $_ENV['DB_USERNAME'];
+        /** @var string */
+        $password = $_ENV['DB_PASSWORD'];
 
         $dsn = "mysql:host={$host}:{$port};dbname={$database};charset=utf8mb4";
 

@@ -12,7 +12,10 @@ class VisitService
 {
     public function __construct(private IVisitRepository $visitRepository) {}
 
-    public function create(VisitRequestDto $visitDto)
+    /**
+     * @throws ResourceAlreadyExistsException
+     */
+    public function create(VisitRequestDto $visitDto): bool
     {
         $visitAlreadyExists = $this->visitRepository->existsByScheduleId($visitDto->scheduleId);
 

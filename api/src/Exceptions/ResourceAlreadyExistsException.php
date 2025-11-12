@@ -8,7 +8,7 @@ use Exception;
 
 class ResourceAlreadyExistsException extends Exception
 {
-    public function __construct($message = 'Resource already exists')
+    public function __construct(string $message = 'Resource already exists')
     {
         parent::__construct($message);
     }

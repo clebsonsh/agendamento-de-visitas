@@ -16,7 +16,7 @@ class ScheduleRepository implements IScheduleRepository
         $this->db = Db::getInstance();
     }
 
-    public function getById(int $id): array
+    public function getById(int $id): mixed
     {
         $stmt = $this->db->prepare(<<<'SQL'
             SELECT
@@ -35,7 +35,7 @@ class ScheduleRepository implements IScheduleRepository
         return $stmt->fetch() ?: [];
     }
 
-    public function getByVehicleId(int $vehicleId): array
+    public function getByVehicleId(int $vehicleId): mixed
     {
         $stmt = $this->db->prepare(<<<'SQL'
             SELECT

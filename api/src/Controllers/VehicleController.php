@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Api\Controllers;
 
 use Api\Data\DTOs\ErrorResponseDto;
+use Api\Data\DTOs\VehicleResponseDto;
+use Api\Exceptions\ResourceNotFoundException;
 use Api\Repositories\ScheduleRepository;
 use Api\Repositories\VehicleRepository;
 use Api\Services\ScheduleService;
@@ -22,19 +24,21 @@ class VehicleController
         $this->scheduleService = new ScheduleService(new ScheduleRepository);
     }
 
-    public function index()
+    public function index(): void
     {
         response()->json([
             'vehicles' => $this->vehicleService->getAll(),
         ]);
     }
 
-    public function show($id)
+    public function show(string $id): void
     {
-        $vehicle = $this->vehicleService->getById((int) $id);
-
-        if (empty($vehicle)) {
+        try {
+            /** @var VehicleResponseDto */
+            $vehicle = $this->vehicleService->getById((int) $id);
+        } catch (ResourceNotFoundException) {
             response()->httpCode(404)->json(new ErrorResponseDto('The vehicle not found.'));
+            exit();
         }
 
         $schedules = $this->scheduleService->getByVehicleId($vehicle->id);

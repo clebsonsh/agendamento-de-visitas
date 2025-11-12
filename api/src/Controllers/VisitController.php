@@ -10,6 +10,7 @@ use Api\Exceptions\ResourceAlreadyExistsException;
 use Api\Exceptions\ValidationException;
 use Api\Repositories\VisitRepository;
 use Api\Services\VisitService;
+use Pecee\Http\Input\InputHandler;
 
 class VisitController
 {
@@ -20,10 +21,16 @@ class VisitController
         $this->visitService = new VisitService(new VisitRepository);
     }
 
-    public function create(int $scheduleId)
+    public function create(int $scheduleId): void
     {
+        /** @var InputHandler */
+        $input = input();
+
+        /** @var array<string, string> */
+        $request = $input->all();
+
         try {
-            $this->visitService->create(VisitRequestDto::fromRequest($scheduleId, input()->all()));
+            $this->visitService->create(VisitRequestDto::fromRequest($scheduleId, $request));
         } catch (ValidationException $e) {
             response()->httpCode(422)->json(
                 new ErrorResponseDto($e->getMessage(), $e->getErrors())

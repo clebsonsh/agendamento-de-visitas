@@ -16,15 +16,19 @@ class VehicleRepository implements IVehicleRepository
         $this->db = Db::getInstance();
     }
 
-    public function getAll(): array
+    public function getAll(): mixed
     {
-        return $this->db->query(<<<'SQL'
+        $stmt = $this->db->prepare(<<<'SQL'
             SELECT *
             FROM vehicles
-        SQL)->fetchAll();
+        SQL);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
     }
 
-    public function getById(int $id): array
+    public function getById(int $id): mixed
     {
         $stmt = $this->db->prepare(<<<'SQL'
             SELECT *

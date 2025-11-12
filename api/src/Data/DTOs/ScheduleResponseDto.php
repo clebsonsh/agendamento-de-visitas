@@ -13,12 +13,15 @@ class ScheduleResponseDto
         public readonly bool $isBooked,
     ) {}
 
-    public static function createFromArray(array $schedule)
+    /**
+     * @param  array<string, string|int|bool>  $schedule
+     */
+    public static function createFromArray(array $schedule): self
     {
         return new self(
-            id: $schedule['id'],
-            vehicleId: $schedule['vehicle_id'],
-            scheduledAt: $schedule['scheduled_at'],
+            id: (int) $schedule['id'],
+            vehicleId: (int) $schedule['vehicle_id'],
+            scheduledAt: (string) $schedule['scheduled_at'],
             isBooked: (bool) $schedule['is_booked'],
         );
     }

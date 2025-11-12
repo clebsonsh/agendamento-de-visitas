@@ -16,16 +16,19 @@ class VehicleResponseDto
         public readonly string $salePoint,
     ) {}
 
-    public static function createFromArray(array $vehicle)
+    /**
+     * @param  array<string, string|int>  $vehicle
+     */
+    public static function createFromArray(array $vehicle): self
     {
         return new self(
-            id: $vehicle['id'],
-            image: $vehicle['image'],
-            make: $vehicle['make'],
-            model: $vehicle['model'],
-            version: $vehicle['version'],
-            price: $vehicle['price'] / 100,
-            salePoint: $vehicle['sale_point'],
+            id: (int) $vehicle['id'],
+            image: (string) $vehicle['image'],
+            make: (string) $vehicle['make'],
+            model: (string) $vehicle['model'],
+            version: (string) $vehicle['version'],
+            price: ((int) $vehicle['price']) / 100,
+            salePoint: (string) $vehicle['sale_point'],
         );
     }
 }
