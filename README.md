@@ -48,3 +48,30 @@ Para levantar a aplicação completa (backend e frontend) usando Docker Compose:
     ```
 
     O frontend estará disponível em `http://localhost:3000`.
+
+## Qualidade de Código e Testes
+
+Para garantir a qualidade do código, manutenibilidade e a corretude das funcionalidades, o projeto utiliza as seguintes ferramentas:
+
+*   **PHPStan**: Ferramenta de análise estática que verifica a consistência e a corretude do código, ajudando a identificar bugs antes mesmo da execução.
+*   **Pint**: Um formatador de código PHP que garante um estilo de código consistente em todo o projeto, seguindo as convenções da comunidade.
+*   **Pest PHP**: Um framework de testes elegante e focado no desenvolvedor, utilizado para escrever testes unitários e de integração.
+*   **Strict Types**: A declaração `declare(strict_types=1);` é utilizada em todo o código para garantir uma tipagem mais rigorosa, prevenindo erros de tipo e melhorando a previsibilidade do código.
+
+Para executar as ferramentas de qualidade de código e os testes, utilize os seguintes comandos a partir do diretório `backend`:
+
+- Executar o PHPStan para análise estática
+```bash
+docker compose exec php-fpm composer phpstan
+```
+
+- Executar o Pint para formatar o código
+```bash
+docker compose exec php-fpm composer pint
+```
+
+- Executar os testes com o Pest PHP
+```bash
+docker compose exec php-fpm composer pest
+```
+

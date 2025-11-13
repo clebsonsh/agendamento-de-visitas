@@ -15,13 +15,13 @@
       "Composer\\Config::disableProcessTimeout",
       "php -S localhost:8000 -t public"
     ],
-    "format": "vendor/bin/pint",
-    "lint": "vendor/bin/phpstan analyze -l 10 src public",
-    "test": "vendor/bin/pest --coverage",
+    "pint": "vendor/bin/pint",
+    "phpstan": "vendor/bin/phpstan analyze -l 10 src public",
+    "pest": "vendor/bin/pest --coverage",
     "ci": [
-      "composer format",
-      "composer lint",
-      "composer test"
+      "composer pint",
+      "composer phpstan",
+      "composer pest"
     ]
   },
   "authors": [
