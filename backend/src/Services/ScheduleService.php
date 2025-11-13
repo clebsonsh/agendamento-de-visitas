@@ -42,10 +42,10 @@ class ScheduleService
 
         $schedules = [];
 
-        foreach ($results as $data) {
-            $shchedule = ScheduleResponseDto::createFromArray($data);
-            $day = (new DateTime($shchedule->scheduledAt))->format('Y-m-d');
-            $schedules[$day][] = $shchedule;
+        foreach ($results as $request) {
+            $schedule = ScheduleResponseDto::createFromArray($request);
+            $day = (new DateTime($schedule->scheduledAt))->format('Y-m-d');
+            $schedules[$day][] = $schedule;
         }
 
         return $schedules;
