@@ -1,0 +1,13 @@
+services:
+  frontend:
+    build:
+      context: ./
+      dockerfile: ./docker/Dockerfile
+    ports:
+      - "3000:80"
+    volumes:
+      - .:/app
+    working_dir: /app
+networks:
+  loop:
+    driver: bridge
