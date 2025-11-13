@@ -15,7 +15,7 @@ class Db
     protected function __construct()
     {
         $dotenv = Dotenv::createImmutable(dirname(__DIR__, 2));
-        $dotenv->load();
+        $dotenv->safeLoad();
 
         /** @var string */
         $host = $_ENV['DB_HOST'];
