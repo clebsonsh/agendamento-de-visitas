@@ -1,0 +1,14 @@
+services:
+  php-fpm:
+    build:
+      dockerfile: ./docker/Dockerfile.dev
+    volumes:
+      - .:/app
+
+  backend:
+    ports: !override
+      - "8000:80"
+
+  db:
+    ports:
+      - "3310:3306"

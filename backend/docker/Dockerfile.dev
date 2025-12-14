@@ -12,8 +12,12 @@ RUN apk update && apk add --no-cache \
 
 RUN docker-php-ext-install pdo_mysql opcache
 
-COPY . /app
+ENV USER=docker
+ENV UID=1000
+ENV GROUP=docker
+ENV GID=1000
 
-RUN composer install --no-interaction --prefer-dist --optimize-autoloader
+RUN addgroup --gid $GID $GROUP
+RUN adduser --disabled-password --gecos '' -u $UID -G $GROUP $USER
 
 EXPOSE 9000
