@@ -3,12 +3,14 @@ services:
     build:
       context: ./
       dockerfile: ./docker/Dockerfile
+    restart: unless-stopped
     env_file: .env
     depends_on:
       - db
 
   backend:
-    image: nginx:alpine
+    image: nginx:1.29-alpine3.23
+    restart: unless-stopped
     ports:
       - "80:80"
     volumes:
