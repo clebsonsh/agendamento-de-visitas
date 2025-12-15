@@ -1,0 +1,20 @@
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        public: true
+
+    # Repository
+    Loop\Vehicle\Model\VehicleRepository:
+        factory: ["@doctrine.orm.vehicle_entity_manager", getRepository]
+        arguments:
+            - Loop\Vehicle\Model\Vehicle
+
+    # Service
+    Loop\Vehicle\Application\LoadVehicleList:
+        arguments:
+            - '@Loop\Vehicle\Model\VehicleRepository'
+
+    # Action
+    Loop\Vehicle\Http\Action\GetVehicleList:
+        arguments:
+            - '@Loop\Vehicle\Application\LoadVehicleList'

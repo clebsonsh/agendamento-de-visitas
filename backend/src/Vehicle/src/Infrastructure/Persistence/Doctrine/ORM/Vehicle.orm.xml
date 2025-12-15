@@ -1,0 +1,21 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+    https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="Loop\Vehicle\Model\Vehicle"
+            table="vehicles"
+            repository-class="Loop\Vehicle\Infrastructure\Persistence\Doctrine\Repository\DoctrineVehicleRepository">
+        <id name="id" column="id" type="integer">
+            <generator strategy="AUTO"/>
+        </id>
+        <field name="image" column="image" />
+        <field name="make" column="make" />
+        <field name="model" column="model" />
+        <field name="version" column="version" />
+        <field name="price" column="price" type="integer" />
+        <field name="salePoint" column="sale_point" />
+        <field name="createdAt" column="created_at" type="datetime_immutable" />
+        <field name="updatedAt" column="updated_at" type="datetime_immutable" />
+    </entity>
+</doctrine-mapping>

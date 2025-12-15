@@ -1,4 +1,4 @@
 vehicle.get_vehicles:
-    path: /vehicles
+    path: /api/v1/vehicles
     methods: GET
-    defaults: { _controller: Loop\Vehicle\Http\Action\GetVehicles::handle }
+    defaults: { _controller: Loop\Vehicle\Http\Action\GetVehicleList::handle }
