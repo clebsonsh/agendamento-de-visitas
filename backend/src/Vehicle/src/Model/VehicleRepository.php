@@ -6,5 +6,8 @@ namespace Loop\Vehicle\Model;
 
 interface VehicleRepository
 {
+    /**
+     * @return array<Vehicle>
+     */
     public function getAll(): array;
 }

@@ -19,11 +19,7 @@ class GetVehicleList
 
     public function handle(): JsonResponse
     {
-        try {
-            $vehicles = $this->loadVehicleList->execute();
-        } catch (\Throwable $th) {
-            throw $th;
-        }
+        $vehicles = $this->loadVehicleList->execute();
 
         return new JsonResponse([
             'vehicles' => $vehicles,

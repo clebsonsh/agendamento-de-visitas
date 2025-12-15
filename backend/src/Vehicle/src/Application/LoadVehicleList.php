@@ -17,7 +17,10 @@ class LoadVehicleList
         $this->vehicleRepository = $vehicleRepository;
     }
 
-    public function execute()
+    /**
+     * @return array<VehicleResposeDto>
+     */
+    public function execute(): array
     {
         return array_map(
             fn (Vehicle $vehicle) => new VehicleResposeDto(
