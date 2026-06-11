@@ -4,24 +4,15 @@ declare(strict_types=1);
 
 namespace Api\Controllers;
 
-use Api\Container;
-use Api\Data\DTOs\ErrorResponseDto;
-use Api\Exceptions\ResourceNotFoundException;
 use Api\Services\ScheduleService;
 use Api\Services\VehicleService;
 
 class VehicleController
 {
-    private VehicleService $vehicleService;
-
-    private ScheduleService $scheduleService;
-
-    public function __construct()
-    {
-        $container = Container::getInstance();
-        $this->vehicleService = $container->get(VehicleService::class);
-        $this->scheduleService = $container->get(ScheduleService::class);
-    }
+    public function __construct(
+        private VehicleService $vehicleService,
+        private ScheduleService $scheduleService,
+    ) {}
 
     public function index(): void
     {
@@ -32,15 +23,7 @@ class VehicleController
 
     public function show(string $id): void
     {
-        try {
-            $vehicle = $this->vehicleService->getById((int) $id);
-        } catch (ResourceNotFoundException) {
-            response()->httpCode(404)->json(
-                new ErrorResponseDto('The vehicle not found.')
-            );
-
-            return;
-        }
+        $vehicle = $this->vehicleService->getById((int) $id);
 
         $schedules = $this->scheduleService->getByVehicleId($vehicle->id);
 

@@ -19,7 +19,7 @@ Router::group(['prefix' => '/api/v1/'], function () {
     Router::post('/schedules/{id}/visits', [VisitController::class, 'create'])->name('visits.create');
 });
 
-Router::error(function (Request $request, \Exception $exception) {
+Router::error(function (Request $_, \Exception $exception) {
     $status = match (true) {
         $exception instanceof NotFoundHttpException => 404,
         default => 500,

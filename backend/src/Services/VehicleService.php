@@ -38,7 +38,7 @@ class VehicleService
         $result = $this->vehicleRepository->getById($id);
 
         if (empty($result)) {
-            throw new ResourceNotFoundException;
+            throw ResourceNotFoundException::create('Vehicle');
         }
 
         return VehicleResponseDto::createFromArray($result);

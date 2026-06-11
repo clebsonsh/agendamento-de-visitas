@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Api\Exceptions;
 
-use Exception;
+use Pecee\SimpleRouter\Exceptions\NotFoundHttpException;
 
-class ResourceNotFoundException extends Exception
+class ResourceNotFoundException extends NotFoundHttpException
 {
     public static function getHttpCode(): int
     {
