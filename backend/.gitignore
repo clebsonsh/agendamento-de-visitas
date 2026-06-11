@@ -1,3 +1,9 @@
 /vendor/
 
 .env
+
+/var/log/*.log
+/var/log/.gitkeep
+
+.phpunit.result.cache
+phpstan.neon.php
