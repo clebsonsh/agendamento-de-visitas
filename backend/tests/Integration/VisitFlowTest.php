@@ -11,6 +11,7 @@ beforeEach(function () {
     $pdo = Db::createPdo();
     $pdo->query('SELECT 1');
     $this->pdo = $pdo;
+    $this->pdo->query('DELETE FROM visits');
     $this->pdo->beginTransaction();
 });
 
