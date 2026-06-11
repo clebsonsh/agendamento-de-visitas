@@ -1,7 +1,7 @@
 const capitalizeFirstLetter = (string: string) =>
   string.charAt(0).toUpperCase() + string.slice(1);
 
-const getFormatterdDate = (date: string) =>
+const getFormattedDate = (date: string) =>
   capitalizeFirstLetter(
     new Date(date).toLocaleDateString("pt-BR", {
       weekday: "long",
@@ -19,4 +19,4 @@ const brlFormatter = (amount: number) =>
     currency: "BRL",
   }).format(amount);
 
-export { capitalizeFirstLetter, getFormatterdDate, brlFormatter };
+export { capitalizeFirstLetter, getFormattedDate, brlFormatter };

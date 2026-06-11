@@ -4,7 +4,7 @@ import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import type { Vehicle } from "../types/interfaces";
 import { brlFormatter } from "../helpers";
 
-function VehicleCard(vehicle: Vehicle) {
+function VehicleCard({ image, make, model, version, price, salePoint }: Vehicle) {
   return (
     <Card
       sx={{
@@ -19,7 +19,7 @@ function VehicleCard(vehicle: Vehicle) {
           height: "auto",
           maxWidth: "100%",
         }}
-        src={vehicle.image}
+        src={image}
       />
       <Box
         sx={{
@@ -32,16 +32,16 @@ function VehicleCard(vehicle: Vehicle) {
       >
         <Box>
           <Typography variant="h5" component="div" sx={{ fontWeight: 600 }}>
-            {vehicle.make} {vehicle.model}
+            {make} {model}
           </Typography>
           <Typography variant="subtitle1" component="div">
-            {vehicle.version}
+            {version}
           </Typography>
         </Box>
 
         <Box>
           <Typography variant="h5" component="div" sx={{ padding: "12px 0" }}>
-            {brlFormatter(vehicle.price)}
+            {brlFormatter(price)}
           </Typography>
           <Divider />
           <Box
@@ -54,7 +54,7 @@ function VehicleCard(vehicle: Vehicle) {
           >
             <LocationOnOutlinedIcon />
             <Typography variant="subtitle1" component="div">
-              {vehicle.salePoint}
+              {salePoint}
             </Typography>
           </Box>
         </Box>
