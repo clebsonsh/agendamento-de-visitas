@@ -6,8 +6,13 @@ import { useState } from "react";
 import { Link } from "react-router";
 import { capitalizeFirstLetter } from "../../helpers";
 
-function ScheduleSelect(schedules: Schedules) {
-  const firstDayInSchedules: string = Object.keys(schedules)[0];
+interface ScheduleSelectProps {
+  schedules: Schedules;
+}
+
+function ScheduleSelect({ schedules }: ScheduleSelectProps) {
+  const dates = Object.keys(schedules);
+  const firstDayInSchedules: string = dates[0];
 
   const monthAndYear: string = capitalizeFirstLetter(
     new Date(firstDayInSchedules).toLocaleDateString("pt-BR", {
@@ -43,7 +48,7 @@ function ScheduleSelect(schedules: Schedules) {
           gap: 4,
         }}
       >
-        {Object.keys(schedules).map((day) => (
+        {dates.map((day) => (
           <ScheduleDayButton
             key={day}
             day={day}

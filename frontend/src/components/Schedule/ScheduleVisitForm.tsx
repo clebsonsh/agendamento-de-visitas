@@ -10,11 +10,11 @@ import type {
   CreateVisitRequest,
 } from "../../types/interfaces";
 import { createNewVisit } from "../../services/apiService";
-import type APIResponseError from "../../errors/APIResponseError";
-import { getFormatterdDate } from "../../helpers";
+import APIResponseError from "../../errors/APIResponseError";
+import { getFormattedDate } from "../../helpers";
 
-function ScheduleVisitForm(schedule: Schedule) {
-  const date = getFormatterdDate(schedule.scheduledAt);
+function ScheduleVisitForm({ id, vehicleId, scheduledAt }: Schedule) {
+  const date = getFormattedDate(scheduledAt);
 
   const [visitFromErrors, setVisitFormErrors] = useState<ErrorDetails>();
 
@@ -28,19 +28,26 @@ function ScheduleVisitForm(schedule: Schedule) {
     mutationFn: createNewVisit,
     onSuccess: () => {
       queryClient.invalidateQueries();
-      navigate(`/${schedule.vehicleId}/schedule/${schedule.id}/done`);
+      navigate(`/${vehicleId}/schedule/${id}/done`);
     },
-    onError: (error: APIResponseError) => {
-      if (error.status == 422) {
-        setVisitFormErrors(error.errors);
-        return;
-      }
+    onError: (error: Error) => {
+      if (error instanceof APIResponseError) {
+        if (error.status == 422) {
+          setVisitFormErrors(error.errors);
+          return;
+        }
 
-      if (error.status == 409) {
-        setResourceAlreadyExistsError(
-          "Este horário não está mais disponível. Não foi possível concluir seu agendamento.",
-        );
-        return;
+        if (error.status == 409) {
+          setResourceAlreadyExistsError(
+            "Este horário não está mais disponível. Não foi possível concluir seu agendamento.",
+          );
+          return;
+        }
+
+        if (error.status === 0) {
+          setResourceAlreadyExistsError(error.message);
+          return;
+        }
       }
 
       console.error(error);
@@ -67,7 +74,7 @@ function ScheduleVisitForm(schedule: Schedule) {
     event.preventDefault();
 
     const createVisitRequest: CreateVisitRequest = {
-      id: schedule.id,
+      id,
       ...visitFormData,
     };
 

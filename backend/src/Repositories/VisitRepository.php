@@ -4,18 +4,12 @@ declare(strict_types=1);
 
 namespace Api\Repositories;
 
-use Api\Data\Db;
 use Api\Data\DTOs\VisitRequestDto;
 use PDO;
 
 class VisitRepository implements IVisitRepository
 {
-    private PDO $db;
-
-    public function __construct()
-    {
-        $this->db = Db::getInstance();
-    }
+    public function __construct(private readonly PDO $db) {}
 
     public function create(VisitRequestDto $visitDto): bool
     {

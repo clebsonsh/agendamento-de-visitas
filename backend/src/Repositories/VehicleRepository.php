@@ -4,17 +4,11 @@ declare(strict_types=1);
 
 namespace Api\Repositories;
 
-use Api\Data\Db;
 use PDO;
 
 class VehicleRepository implements IVehicleRepository
 {
-    private PDO $db;
-
-    public function __construct()
-    {
-        $this->db = Db::getInstance();
-    }
+    public function __construct(private readonly PDO $db) {}
 
     public function getAll(): mixed
     {
