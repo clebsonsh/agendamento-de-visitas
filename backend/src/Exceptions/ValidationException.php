@@ -21,6 +21,11 @@ class ValidationException extends Exception
         parent::__construct($message);
     }
 
+    public static function getHttpCode(): int
+    {
+        return 422;
+    }
+
     /**
      * @return array<string, string>
      */

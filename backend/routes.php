@@ -7,10 +7,8 @@ use Api\Controllers\VehicleController;
 use Api\Controllers\VisitController;
 use Api\Data\DTOs\ErrorResponseDto;
 use Pecee\Http\Request;
+use Pecee\SimpleRouter\Exceptions\NotFoundHttpException;
 use Pecee\SimpleRouter\SimpleRouter as Router;
-
-/** @todo allow only requests from our front-end */
-header('Access-Control-Allow-Origin: *');
 
 Router::group(['prefix' => '/api/v1/'], function () {
     Router::get('/vehicles', [VehicleController::class, 'index'])->name('vehicles.index');
@@ -22,10 +20,12 @@ Router::group(['prefix' => '/api/v1/'], function () {
 });
 
 Router::error(function (Request $request, \Exception $exception) {
-    switch ($exception->getCode()) {
-        case 404:
-            response()->httpCode(404)->json(new ErrorResponseDto('The route not found.'));
-        default:
-            response()->httpCode(500)->json(new ErrorResponseDto('Something went wrong.'));
-    }
+    $status = match (true) {
+        $exception instanceof NotFoundHttpException => 404,
+        default => 500,
+    };
+
+    response()->httpCode($status)->json(
+        new ErrorResponseDto($exception->getMessage())
+    );
 });

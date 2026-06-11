@@ -4,17 +4,11 @@ declare(strict_types=1);
 
 namespace Api\Repositories;
 
-use Api\Data\Db;
 use PDO;
 
 class ScheduleRepository implements IScheduleRepository
 {
-    private PDO $db;
-
-    public function __construct()
-    {
-        $this->db = Db::getInstance();
-    }
+    public function __construct(private readonly PDO $db) {}
 
     public function getById(int $id): mixed
     {

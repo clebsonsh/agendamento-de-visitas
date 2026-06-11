@@ -4,49 +4,34 @@ declare(strict_types=1);
 
 namespace Api\Data;
 
-use Dotenv\Dotenv;
 use PDO;
-use PDOException;
 
 class Db
 {
-    private static PDO $instace;
-
-    protected function __construct()
+    public static function createPdo(): PDO
     {
-        $dotenv = Dotenv::createImmutable(dirname(__DIR__, 2));
-        $dotenv->safeLoad();
-
-        /** @var string */
-        $host = $_ENV['DB_HOST'];
-        /** @var string */
-        $port = $_ENV['DB_PORT'];
-        /** @var string */
-        $database = $_ENV['DB_DATABASE'];
-        /** @var string */
-        $username = $_ENV['DB_USERNAME'];
-        /** @var string */
-        $password = $_ENV['DB_PASSWORD'];
+        $host = self::env('DB_HOST', '127.0.0.1');
+        $port = self::env('DB_PORT', '3306');
+        $database = self::env('DB_DATABASE', 'scheduling');
+        $username = self::env('DB_USERNAME', 'root');
+        $password = self::env('DB_PASSWORD', '');
 
         $dsn = "mysql:host={$host}:{$port};dbname={$database};charset=utf8mb4";
 
-        try {
-            $pdo = new PDO($dsn, $username, $password);
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            self::$instace = $pdo;
-        } catch (PDOException $e) {
-            exit($e->getMessage());
-        }
+        $pdo = new PDO($dsn, $username, $password, [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_EMULATE_PREPARES => false,
+        ]);
+
+        return $pdo;
     }
 
-    protected function __clone() {}
-
-    public static function getInstance(): PDO
+    private static function env(string $key, string $default): string
     {
-        if (! isset(self::$instace)) {
-            new self;
-        }
+        /** @var string */
+        $value = $_ENV[$key] ?? $default;
 
-        return self::$instace;
+        return $value;
     }
 }
