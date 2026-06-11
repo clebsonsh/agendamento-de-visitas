@@ -22,7 +22,7 @@ class ScheduleService
         $result = $this->scheduleRepository->getById($id);
 
         if (empty($result)) {
-            throw new ResourceNotFoundException;
+            throw ResourceNotFoundException::create('Schedule');
         }
 
         return ScheduleResponseDto::createFromArray($result);

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Api\Controllers;
 
-use Api\Container;
 use Api\Data\DTOs\ErrorResponseDto;
 use Api\Data\DTOs\VisitRequestDto;
 use Api\Exceptions\ResourceAlreadyExistsException;
@@ -14,13 +13,9 @@ use Pecee\Http\Input\InputHandler;
 
 class VisitController
 {
-    private VisitService $visitService;
-
-    public function __construct()
-    {
-        $container = Container::getInstance();
-        $this->visitService = $container->get(VisitService::class);
-    }
+    public function __construct(
+        private VisitService $visitService,
+    ) {}
 
     public function create(int $scheduleId): void
     {
